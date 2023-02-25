@@ -13,6 +13,10 @@
 		9511210129AA049D003ACE7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 951120FF29AA049D003ACE7B /* Main.storyboard */; };
 		9511210329AA049F003ACE7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9511210229AA049F003ACE7B /* Assets.xcassets */; };
 		9511210629AA049F003ACE7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9511210429AA049F003ACE7B /* LaunchScreen.storyboard */; };
+		9511210F29AA08CC003ACE7B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 9511210E29AA08CC003ACE7B /* SDWebImage */; };
+		9511211729AA1171003ACE7B /* PostRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511211629AA1171003ACE7B /* PostRequestManager.swift */; };
+		9511212529AA1CEE003ACE7B /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511212429AA1CEE003ACE7B /* HTTPManager.swift */; };
+		9511212729AA1CFA003ACE7B /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511212629AA1CFA003ACE7B /* HTTP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,9 @@
 		9511210229AA049F003ACE7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9511210529AA049F003ACE7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9511210729AA049F003ACE7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9511211629AA1171003ACE7B /* PostRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequestManager.swift; sourceTree = "<group>"; };
+		9511212429AA1CEE003ACE7B /* HTTPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
+		9511212629AA1CFA003ACE7B /* HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9511210F29AA08CC003ACE7B /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +64,34 @@
 		951120F829AA049D003ACE7B /* Pepega */ = {
 			isa = PBXGroup;
 			children = (
+				9511211129AA0905003ACE7B /* View */,
+				9511211029AA08F2003ACE7B /* Web */,
 				951120F929AA049D003ACE7B /* AppDelegate.swift */,
-				951120FB29AA049D003ACE7B /* SceneDelegate.swift */,
-				951120FD29AA049D003ACE7B /* ViewController.swift */,
-				951120FF29AA049D003ACE7B /* Main.storyboard */,
 				9511210229AA049F003ACE7B /* Assets.xcassets */,
-				9511210429AA049F003ACE7B /* LaunchScreen.storyboard */,
 				9511210729AA049F003ACE7B /* Info.plist */,
 			);
 			path = Pepega;
+			sourceTree = "<group>";
+		};
+		9511211029AA08F2003ACE7B /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				9511212629AA1CFA003ACE7B /* HTTP.swift */,
+				9511212429AA1CEE003ACE7B /* HTTPManager.swift */,
+				9511211629AA1171003ACE7B /* PostRequestManager.swift */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		9511211129AA0905003ACE7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				951120FB29AA049D003ACE7B /* SceneDelegate.swift */,
+				951120FD29AA049D003ACE7B /* ViewController.swift */,
+				951120FF29AA049D003ACE7B /* Main.storyboard */,
+				9511210429AA049F003ACE7B /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +110,9 @@
 			dependencies = (
 			);
 			name = Pepega;
+			packageProductDependencies = (
+				9511210E29AA08CC003ACE7B /* SDWebImage */,
+			);
 			productName = Pepega;
 			productReference = 951120F629AA049D003ACE7B /* Pepega.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +141,9 @@
 				Base,
 			);
 			mainGroup = 951120ED29AA049D003ACE7B;
+			packageReferences = (
+				9511210D29AA08CC003ACE7B /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 951120F729AA049D003ACE7B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				951120FE29AA049D003ACE7B /* ViewController.swift in Sources */,
+				9511212529AA1CEE003ACE7B /* HTTPManager.swift in Sources */,
+				9511211729AA1171003ACE7B /* PostRequestManager.swift in Sources */,
 				951120FA29AA049D003ACE7B /* AppDelegate.swift in Sources */,
 				951120FC29AA049D003ACE7B /* SceneDelegate.swift in Sources */,
+				9511212729AA1CFA003ACE7B /* HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,9 +338,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ua.edu.ukma.surzhenko.Pepega;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -330,9 +369,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ua.edu.ukma.surzhenko.Pepega;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -358,6 +400,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9511210D29AA08CC003ACE7B /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9511210E29AA08CC003ACE7B /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9511210D29AA08CC003ACE7B /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 951120EE29AA049D003ACE7B /* Project object */;
 }
