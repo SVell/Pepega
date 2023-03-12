@@ -20,12 +20,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     
+    var urlToShare = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        self.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
     }
     
     func normalize(data: Post){
+        self.urlToShare = data.url
+        
         DispatchQueue.main.async {
             
             let now = Date().timeIntervalSince1970
@@ -39,6 +45,36 @@ class ViewController: UIViewController {
             self.ratingLabel?.text = String(data.ups - data.downs)
             self.commentsLabel?.text = String(data.num_comments)
             self.postImage.sd_setImage(with: URL(string: data.url), placeholderImage: UIImage())
+            self.saveButton?.isSelected = PostRequestManager.shared.getSaved().firstIndex(where: { $0.title == data.title }) != nil
+            
+            
+            self.urlToShare = data.url
+        }
+    }
+    
+    @IBAction func saveButton(_ sender: UIButton){
+        sender.isSelected = !sender.isSelected
+        if(sender.isSelected){
+            PostRequestManager.shared.save(title: titleLabel.text!)
+        }
+        if(!sender.isSelected){
+            PostRequestManager.shared.remove(title: titleLabel.text!)
+        }
+    }
+    
+    @IBAction func shareLink(_ sender: UIButton) {
+        guard let url = URL(string: urlToShare) else {
+            return
+        }
+
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        
+        // Set the excluded activity types if desired
+        activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact]
+        
+        // Present the activity view controller
+        if let presenter = UIApplication.shared.keyWindow?.rootViewController {
+            presenter.present(activityViewController, animated: true, completion: nil)
         }
     }
     

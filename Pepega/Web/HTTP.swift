@@ -28,7 +28,7 @@ struct Response : Codable{
     }
 }
 
-struct Post:Codable{
+struct Post:Codable, Equatable{
            var author:String
            var domain:String
            var created_utc:Double
@@ -50,20 +50,6 @@ struct Post:Codable{
             self.isSaved = false
         }
         
-}
-
-class Repository{
-    static func parse(data:Data) -> Post?{
-        do{
-            let result = try JSONDecoder().decode(Post.self, from: data)
-            return result
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
-        
-    }
-    
 }
 
 class HTTPService {
@@ -112,13 +98,13 @@ class HTTPService {
         })
     }
     
-    static func writeInfo(data: Data, completion: (Bool) -> Void) {
+    /* static func writeInfo(data: Data, completion: (Bool) -> Void) {
         HTTPManager.shared.cache = data
         if HTTPManager.shared.cache != data {
             completion(false)
         } else {
             completion(true)
         }
-    }
+    } */
 }
 

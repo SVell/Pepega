@@ -20,6 +20,7 @@
 		957B0ED129B4FBBD0079B89E /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957B0ED029B4FBBD0079B89E /* PostListViewController.swift */; };
 		957B0ED329B4FCDF0079B89E /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957B0ED229B4FCDF0079B89E /* Info.swift */; };
 		957B0ED529B4FE740079B89E /* PostRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957B0ED429B4FE740079B89E /* PostRequestManager.swift */; };
+		95FED71E29BDC94A00C10A6D /* JsonFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FED71D29BDC94A00C10A6D /* JsonFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		957B0ED029B4FBBD0079B89E /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		957B0ED229B4FCDF0079B89E /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		957B0ED429B4FE740079B89E /* PostRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequestManager.swift; sourceTree = "<group>"; };
+		95FED71D29BDC94A00C10A6D /* JsonFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		951120F829AA049D003ACE7B /* Pepega */ = {
 			isa = PBXGroup;
 			children = (
+				95FED71C29BDC93400C10A6D /* Files */,
 				9511211129AA0905003ACE7B /* View */,
 				9511211029AA08F2003ACE7B /* Web */,
 				951120F929AA049D003ACE7B /* AppDelegate.swift */,
@@ -101,6 +104,14 @@
 				957B0ED029B4FBBD0079B89E /* PostListViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		95FED71C29BDC93400C10A6D /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				95FED71D29BDC94A00C10A6D /* JsonFileManager.swift */,
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +198,7 @@
 				957B0ED329B4FCDF0079B89E /* Info.swift in Sources */,
 				9511212529AA1CEE003ACE7B /* HTTPManager.swift in Sources */,
 				951120FA29AA049D003ACE7B /* AppDelegate.swift in Sources */,
+				95FED71E29BDC94A00C10A6D /* JsonFileManager.swift in Sources */,
 				951120FC29AA049D003ACE7B /* SceneDelegate.swift in Sources */,
 				9511212729AA1CFA003ACE7B /* HTTP.swift in Sources */,
 			);

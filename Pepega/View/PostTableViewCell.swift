@@ -22,6 +22,12 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleL: UITextView!
     @IBOutlet private weak var shareL: UIButton!
     @IBOutlet private weak var imgView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    var tableView :PostTableViewController?
+    
+    var url: String = ""
+
     
     // MARK: - Lifecycle methods
     
@@ -34,19 +40,31 @@ class PostTableViewCell: UITableViewCell {
         ratingL.text = nil
         titleL.text = nil
         imgView.image = nil
+        url = ""
+        
+        
+        saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
     }
     
     // MARK: - Public methods
     
-    func configure(for post: Post) {
-        let timeString = getTimeString(from: TimeInterval(post.created_utc))
-        authorL.text = post.author
-        timeL.text = timeString
-        domainL.text = post.domain
-        titleL.text = post.title
-        ratingL.text = "\(post.ups - post.downs)"
-        numcommentsL.text = "\(post.num_comments)"
-        imgView.sd_setImage(with: URL(string: post.url), placeholderImage: UIImage())
+    func configure(for post: Post, table: PostTableViewController) {
+            let timeString = self.getTimeString(from: TimeInterval(post.created_utc))
+            self.authorL.text = post.author
+            self.timeL.text = timeString
+            self.domainL.text = post.domain
+            self.titleL.text = post.title
+            self.ratingL.text = "\(post.ups - post.downs)"
+            self.numcommentsL.text = "\(post.num_comments)"
+            self.imgView.sd_setImage(with: URL(string: post.url), placeholderImage: UIImage())
+            // self.saveButton.addTarget(self, action: #selector(self.saveButtonAction), for: .touchUpInside)
+        
+        url = post.url
+            
+            self.saveButton.isSelected = PostRequestManager.shared.getSaved().firstIndex(where: { $0.title == post.title }) != nil
+        
+        tableView = table
     }
     
     // MARK: - Private methods
@@ -71,6 +89,25 @@ class PostTableViewCell: UITableViewCell {
         
         return timeString
     }
+    
+    @IBAction func saveButtonAction(_ sender: UIButton){
+
+            sender.isSelected = !sender.isSelected
+            if(sender.isSelected){
+                PostRequestManager.shared.save(title: self.titleL.text!)
+            }
+            if(!sender.isSelected){
+                PostRequestManager.shared.remove(title: self.titleL.text!)
+            }
+        }
+    
+    @IBAction func openUrl(_ sender: UIButton){
+
+        tableView?.shareLink(urlString: url)
+        
+    }
+    
+    
 }
 
 
