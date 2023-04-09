@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SwiftUI
 
 class ViewController: UIViewController {
     
@@ -14,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var titleLabel: UITextView!
     @IBOutlet weak var shareButton: UIButton!
@@ -21,6 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     var urlToShare = ""
+    var link = ""
     
     private var animatedBookmark: UIView?
     
@@ -36,10 +39,13 @@ class ViewController: UIViewController {
         
         self.saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         self.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
+        
+        self.commentsButton.addTarget(self, action: #selector(self.commentTapped), for: .touchUpInside)
     }
     
     func normalize(data: Post){
         self.urlToShare = data.url
+        self.link = data.permalink
         
         DispatchQueue.main.async {
             
@@ -57,8 +63,15 @@ class ViewController: UIViewController {
             self.saveButton?.isSelected = PostRequestManager.shared.getSaved().firstIndex(where: { $0.title == data.title }) != nil
             
             
+            
             self.urlToShare = data.url
         }
+    }
+    
+    @objc func commentTapped(){
+        let redditCommentsView = RedditCommentsView(redditPostURL: link)
+        let hostingController = UIHostingController(rootView: redditCommentsView)
+        navigationController?.pushViewController(hostingController, animated: true)
     }
     
     @IBAction func saveButton(_ sender: UIButton){

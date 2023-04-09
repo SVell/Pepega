@@ -22,7 +22,7 @@ struct Response : Codable{
                 var ups:Int
                 var downs:Int
                 var num_comments:Int
-              
+                var permalink:String
             }
         }
     }
@@ -38,6 +38,8 @@ struct Post:Codable, Equatable{
            var downs:Int
            var num_comments:Int
            var isSaved:Bool
+        var permalink:String
+    
     init(_ post: Response.DataStruct.ItemStruct.ItemDataStruct) {
             self.author = post.author
             self.domain = post.domain
@@ -48,6 +50,7 @@ struct Post:Codable, Equatable{
             self.downs = post.downs
             self.num_comments = (post.num_comments)
             self.isSaved = false
+            self.permalink = post.permalink
         }
         
 }

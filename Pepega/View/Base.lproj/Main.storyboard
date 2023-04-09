@@ -188,7 +188,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="rQP-vY-0fp">
                         <nil key="title"/>
-                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="1Wb-oE-XXL">
+                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="1Wb-oE-XXL">
                             <rect key="frame" x="110.66666666666669" y="5" width="172" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -342,6 +342,7 @@
                     <navigationItem key="navigationItem" id="7Pd-TE-MSQ"/>
                     <connections>
                         <outlet property="authorLabel" destination="BI3-qS-Scw" id="e4Q-6J-ZhR"/>
+                        <outlet property="commentsButton" destination="U6H-xw-SWi" id="mUa-Jg-NWp"/>
                         <outlet property="commentsLabel" destination="i8r-ah-SEB" id="cq5-ks-CUc"/>
                         <outlet property="domainLabel" destination="dLO-vf-IEp" id="mE8-eo-SS6"/>
                         <outlet property="postImage" destination="vts-og-BYa" id="BQp-Gl-bTa"/>
