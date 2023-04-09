@@ -13,6 +13,7 @@ struct RedditCommentsView: View {
     
     @State private var comments: [RedditComment] = []
     @State private var isLoadingComments = false
+    @State private var selectedComment: RedditComment? = nil
     
     var body: some View {
         NavigationView {
@@ -23,11 +24,13 @@ struct RedditCommentsView: View {
                     .foregroundColor(.secondary)
             } else {
                 List(comments, id: \.id) { comment in
-                    VStack(alignment: .leading) {
-                        Text(comment.author)
-                            .font(.headline)
-                        Text(comment.body)
-                            .font(.body)
+                    NavigationLink(destination: CommentDetailView(comment: comment), tag: comment, selection: $selectedComment) {
+                        VStack(alignment: .leading) {
+                            Text(comment.author)
+                                .font(.headline)
+                            Text(comment.body)
+                                .font(.body)
+                        }
                     }
                 }
                 .navigationTitle("Comments")
@@ -72,10 +75,12 @@ struct RedditCommentsView: View {
                     guard let data = commentJSON["data"] as? [String: Any],
                           let id = data["id"] as? String,
                           let author = data["author"] as? String,
-                          let body = data["body"] as? String else {
+                          let body = data["body"] as? String,
+                          let ups = data["ups"] as? Int,
+                          let downs = data["downs"] as? Int else {
                         return nil
                     }
-                    return RedditComment(id: id, author: author, body: body)
+                    return RedditComment(id: id, author: author, body: body, ups: ups, downs: downs)
                 } ?? []
                 
                 DispatchQueue.main.async {
@@ -89,29 +94,40 @@ struct RedditCommentsView: View {
     }
 }
 
-struct RedditComment: Identifiable {
+struct RedditComment: Identifiable, Hashable {
     let id: String
     let author: String
     let body: String
+    let ups: Int
+    let downs: Int
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
-struct RedditCommentsResponse: Decodable {
-    let kind: String
-    let data: RedditCommentsData
-}
-
-struct RedditCommentsData: Decodable {
-    let children: [RedditCommentWrapper]
-}
-
-struct RedditCommentWrapper: Decodable {
-    let data: RedditCommentData?
-}
-
-struct RedditCommentData: Decodable {
-    let id: String
-    let author: String
-    let body: String
+struct CommentDetailView: View {
+    
+    let comment: RedditComment
+    
+    var body: some View {
+        VStack {
+            Text(comment.author)
+                .font(.headline)
+            Text(comment.body)
+                .font(.body)
+            Text("Upvotes: \(comment.ups)")
+            Text("Downvotes: \(comment.downs)")
+            Spacer()
+            Button("Share") {
+                let url = URL(string: "https://www.reddit.com\(comment.id)")!
+                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+            }
+        }
+        .padding()
+        .navigationTitle("Comment")
+    }
 }
 
 
