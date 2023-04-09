@@ -22,8 +22,17 @@ class ViewController: UIViewController {
     
     var urlToShare = ""
     
+    private var animatedBookmark: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.bookmarkAnimation))
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+
+        self.postImage.addGestureRecognizer(doubleTap)
+        self.postImage.isUserInteractionEnabled = true
         
         self.saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         self.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
@@ -76,6 +85,50 @@ class ViewController: UIViewController {
         if let presenter = UIApplication.shared.keyWindow?.rootViewController {
             presenter.present(activityViewController, animated: true, completion: nil)
         }
+    }
+    
+    @objc func bookmarkAnimation() {
+        
+        animatedBookmark = Utils.bookmarkIconViewCell(for: self.postImage, isSaved: !saveButton.isSelected)
+        self.animatedBookmark?.frame.origin.x = self.postImage.center.x - 12;
+        self.animatedBookmark?.frame.origin.y = self.view.center.y - 10;
+        self.view.addSubview(self.animatedBookmark!)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            UIView.transition(
+                with: self.view,
+                duration: 1,
+                options: .transitionCrossDissolve
+            ) {
+                self.animatedBookmark?.isHidden = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    UIView.transition(
+                        with: self.view,
+                        duration: 1,
+                        options: .transitionCrossDissolve
+                    ) {
+                        self.animatedBookmark?.isHidden = true
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        DispatchQueue.main.async {
+            
+            
+            self.saveButton.isSelected = !self.saveButton.isSelected
+            if(self.saveButton.isSelected){
+                PostRequestManager.shared.save(title: self.titleLabel.text!)
+            }
+            if(!self.saveButton.isSelected){
+                PostRequestManager.shared.remove(title: self.titleLabel.text!)
+            }
+        }
+        
     }
     
     private func timeString(for timeInterval: TimeInterval) -> String {

@@ -21,12 +21,14 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
     var filteredItems: Array<Post> = []
     
     // Button used for filtering posts
-    var filterButton = UIButton()
+    var savedButton = UIButton()
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet private weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         // Set delegate and datasource
         tableView.delegate = self
@@ -36,14 +38,14 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
         self.titleLabel.text = "/r/\(subreddit)"
         
         // Set up filter button with images and tint color
-        filterButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
-        filterButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
-        self.filterButton.addTarget(self, action: #selector(self.showSaved), for: .touchUpInside)
-        filterButton.tintColor = UIColor.systemPurple
+        savedButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        savedButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
+        self.savedButton.addTarget(self, action: #selector(self.showSaved), for: .touchUpInside)
+        savedButton.tintColor = UIColor.systemPurple
         
         
-        // Set filter button as right bar button item
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterButton)
+        // Set savedButton button as right bar button item
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: savedButton)
         
         // Register for notification when new posts are available
         NotificationCenter.default.addObserver(self, selector: #selector(loadPosts), name: notify, object: nil)
@@ -74,7 +76,7 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
         filteredItems.removeAll()
         searchTextField.text = ""
         searchTextField.isHidden = !searchTextField.isHidden;
-        filterButton.isSelected = !filterButton.isSelected
+        savedButton.isSelected = !savedButton.isSelected
         loadSaved()
     }
     
@@ -124,7 +126,7 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
         if(filteredItems.count > 0){
             return filteredItems.count
         }
-        if filterButton.isSelected {
+        if savedButton.isSelected {
             return savedPosts.count
         }
         else {
@@ -141,7 +143,7 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
             return cell
         }
         
-        if filterButton.isSelected {
+        if savedButton.isSelected {
             cell.configure(for: savedPosts[indexPath.row], table: self)
             cell.saveButton.tag = indexPath.row
         }
@@ -188,7 +190,7 @@ class PostTableViewController: UITableViewController, UITextFieldDelegate {
                 // Pass data from selected post to next view controller
                 let info = segue.destination as! ViewController
                 
-                if (filterButton.isSelected) {
+                if (savedButton.isSelected) {
                     info.normalize(data: savedPosts[indexPath])
                 }
                 else {

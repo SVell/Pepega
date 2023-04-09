@@ -97,14 +97,5 @@ class HTTPService {
             }
         })
     }
-    
-    /* static func writeInfo(data: Data, completion: (Bool) -> Void) {
-        HTTPManager.shared.cache = data
-        if HTTPManager.shared.cache != data {
-            completion(false)
-        } else {
-            completion(true)
-        }
-    } */
 }
 

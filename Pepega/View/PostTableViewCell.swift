@@ -27,6 +27,8 @@ class PostTableViewCell: UITableViewCell {
     var tableView :PostTableViewController?
     
     var url: String = ""
+    
+    private var animatedBookmark: UIView?
 
     
     // MARK: - Lifecycle methods
@@ -50,6 +52,15 @@ class PostTableViewCell: UITableViewCell {
     // MARK: - Public methods
     
     func configure(for post: Post, table: PostTableViewController) {
+            let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.bookmarkAnimation))
+            doubleTap.numberOfTapsRequired = 2
+            doubleTap.delaysTouchesBegan = true
+
+            self.imgView.addGestureRecognizer(doubleTap)
+            self.imgView.isUserInteractionEnabled = true
+        
+        
+        
             let timeString = self.getTimeString(from: TimeInterval(post.created_utc))
             self.authorL.text = post.author
             self.timeL.text = timeString
@@ -107,7 +118,49 @@ class PostTableViewCell: UITableViewCell {
         
     }
     
-    
+    @objc func bookmarkAnimation() {
+        
+        animatedBookmark = Utils.bookmarkIconViewCell(for: self.imgView, isSaved: !saveButton.isSelected)
+        self.animatedBookmark?.frame.origin.x = self.imgView.center.x - 12;
+        self.animatedBookmark?.frame.origin.y = self.imgView.center.y - 10;
+        self.addSubview(self.animatedBookmark!)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            UIView.transition(
+                with: self.tableView!.view,
+                duration: 1,
+                options: .transitionCrossDissolve
+            ) {
+                self.animatedBookmark?.isHidden = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    UIView.transition(
+                        with: self.tableView!.view,
+                        duration: 1,
+                        options: .transitionCrossDissolve
+                    ) {
+                        self.animatedBookmark?.isHidden = true
+                    }
+                
+                }
+            }
+            
+        }
+        
+        DispatchQueue.main.async {
+            
+            
+            self.saveButton.isSelected = !self.saveButton.isSelected
+            if(self.saveButton.isSelected){
+                PostRequestManager.shared.save(title: self.titleL.text!)
+            }
+            if(!self.saveButton.isSelected){
+                PostRequestManager.shared.remove(title: self.titleL.text!)
+            }
+        }
+        
+    }
 }
 
 
