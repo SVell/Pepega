@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import SDWebImage
 
 class PostTableViewCell: UITableViewCell {
@@ -23,10 +24,12 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var shareL: UIButton!
     @IBOutlet private weak var imgView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
     
     var tableView :PostTableViewController?
     
     var url: String = ""
+    var link = ""
     
     private var animatedBookmark: UIView?
 
@@ -72,13 +75,19 @@ class PostTableViewCell: UITableViewCell {
             // self.saveButton.addTarget(self, action: #selector(self.saveButtonAction), for: .touchUpInside)
         
         url = post.url
+        link = post.permalink
             
             self.saveButton.isSelected = PostRequestManager.shared.getSaved().firstIndex(where: { $0.title == post.title }) != nil
+        self.commentButton.addTarget(self, action: #selector(self.commentTapped), for: .touchUpInside)
         
         tableView = table
     }
     
-    // MARK: - Private methods
+    @objc func commentTapped(){
+        let redditCommentsView = RedditCommentsView(redditPostURL: link)
+        let hostingController = UIHostingController(rootView: redditCommentsView)
+        tableView?.navigationController?.pushViewController(hostingController, animated: true)
+    }
     
     private func getTimeString(from timestamp: TimeInterval) -> String {
         let now = Date().timeIntervalSince1970

@@ -54,12 +54,12 @@ struct RedditCommentsView: View {
             isLoadingComments = false
             
             if let error = error {
-                print("Error loading comments: \(error.localizedDescription)")
+                print("Error loading comments")
                 return
             }
             
             guard let data = data else {
-                print("No data returned from server")
+                print("No data")
                 return
             }
             
@@ -87,7 +87,7 @@ struct RedditCommentsView: View {
                     self.comments = comments
                 }
             } catch {
-                print("Error parsing comment data: \(error.localizedDescription)")
+                print("Error parsing comment data")
             }
             
         }.resume()

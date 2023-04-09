@@ -170,6 +170,7 @@
                                 <inset key="separatorInset" minX="35" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="authorL" destination="54D-CD-iWO" id="0nf-vq-WU6"/>
+                                    <outlet property="commentButton" destination="3hw-Ic-uf8" id="Cwf-qf-ARf"/>
                                     <outlet property="domainL" destination="bqb-el-2nw" id="vu7-6l-6GV"/>
                                     <outlet property="imgView" destination="t0Q-yT-Vzd" id="vGM-G3-hSU"/>
                                     <outlet property="numcommentsL" destination="Bhk-dD-Vex" id="yJe-5Z-2mX"/>
